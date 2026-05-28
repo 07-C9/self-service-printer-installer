@@ -1,0 +1,11 @@
+DisplayName,Driver,URI,DriverTrigger,Location,Options
+BLDGA-Office-M402,/Library/Printers/PPDs/Contents/Resources/HP LaserJet Pro M402-M403 n-dn.gz,lpd://printserver/BLDGA-Office-M402,print_drivers,Building A - Main Office,
+BLDGA-Rm101-M404,/Library/Printers/PPDs/Contents/Resources/HP LaserJet Pro M404-M405.gz,lpd://printserver/BLDGA-Rm101-M404,print_drivers,Building A - Room 101,
+BLDGA-Rm205-M452,/Library/Printers/PPDs/Contents/Resources/HP Color LaserJet Pro M452.gz,lpd://printserver/BLDGA-Rm205-M452,print_drivers,Building A - Room 205,
+BLDGA-Library-M601,/Library/Printers/PPDs/Contents/Resources/HP LaserJet 600 M601 M602 M603.gz,lpd://printserver/BLDGA-Library-M601,print_drivers,Building A - Library,
+BLDGA-WorkRm-C658,/Library/Printers/PPDs/Contents/Resources/KONICAMINOLTAC658.gz,lpd://printserver/BLDGA-WorkRm-C658,konica_drivers,Building A - Work Room,
+BLDGB-Office-M454,/Library/Printers/PPDs/Contents/Resources/HP LJ 300-400 color M351-M451.gz,lpd://printserver/BLDGB-Office-M454,print_drivers,Building B - Main Office,
+BLDGB-Rm300-BP70M45,/Library/Printers/PPDs/Contents/Resources/SHARP BP-70M45.PPD,lpd://printserver/BLDGB-Rm300-BP70M45,sharp_drivers,Building B - Room 300,
+BLDGB-Rm310-HL3295,/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/PrintCore.framework/Versions/A/Resources/Generic.ppd,lpd://printserver/BLDGB-Rm310-HL3295,,Building B - Room 310,APOptionalDuplexer=True
+BLDGB-Copier-808,/Library/Printers/PPDs/Contents/Resources/KONICAMINOLTA808.gz,lpd://printserver/BLDGB-Copier-808,konica_drivers,Building B - Copy Room,
+BLDGC-Rm400-BP70C45,/Library/Printers/PPDs/Contents/Resources/SHARP BP-70C45.PPD,lpd://printserver/BLDGC-Rm400-BP70C45,sharp_drivers,Building C - Room 400,Option1=Finisher Option9=PModule33
