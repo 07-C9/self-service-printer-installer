@@ -28,7 +28,7 @@ Konica copiers need manual account tracking setup after install. The confirmatio
 
 ## Requirements
 
-- macOS (tested Monterey through Tahoe). Compatibility is driven by [Mac Admins Python](https://github.com/macadmins/python) for the Python 3 runtime and [SwiftDialog](https://github.com/swiftDialog/swiftDialog) for the UI, both actively maintained for current macOS releases.
+- macOS (tested Monterey through Tahoe). Compatibility is driven by [Mac Admins Python](https://github.com/macadmins/python) for the Python 3 runtime and [SwiftDialog](https://github.com/swiftDialog/swiftDialog) for the UI, both actively maintained for current macOS releases. The shebang points to the Mac Admins Python framework path (`/Library/ManagedFrameworks/Python/Python3.framework/...`). If your environment uses a different Python 3 path, update the first line of the script.
 - [Jamf Pro](https://www.jamf.com/) for policy execution and driver deployment
 - `requests` library (auto-installed at runtime if missing)
 
