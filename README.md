@@ -6,7 +6,7 @@ A macOS script intended for Jamf Pro Self Service that lets end users install ne
 
 ## How it works
 
-1. Downloads the printer catalog from a Google Sheets CSV (nothing is hardcoded)
+1. Downloads the printer catalog from a Google Sheets CSV
 2. Shows the user a list of available printers, minus any they already have installed
 3. Installs the vendor print driver via Jamf policy trigger if needed
 4. Maps the queue via `lpadmin` with the correct PPD, URI, and any per-printer options
