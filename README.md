@@ -91,7 +91,7 @@ Upload the script to Jamf Pro (Settings > Scripts), then create a Self Service p
 
 Jamf reserves parameters 1-3 (mount point, computer name, username). The script uses:
 
-- Parameter 4 (`preselected_queue`): Auto-install a specific printer by DisplayName, no picker shown
+- Parameter 4 (`preselected_queue`): Optional. If set to an exact DisplayName, skips the picker and maps that queue directly. Inherited from the original project.
 - Parameter 5 (`filter_key`): Any CSV column name to filter on
 - Parameter 6 (`filter_value`): Value to match (uses `startswith`, so partial matches work)
 
@@ -107,7 +107,7 @@ The filter uses `startswith` matching against whichever CSV column you specify. 
 
 **No filter (show everything):** Leave parameters 5 and 6 empty. The user sees every printer in the spreadsheet that isn't already installed. This works fine for smaller environments.
 
-**Auto-install a specific printer:** Set parameter 4 to the exact DisplayName. The script skips the picker and maps that queue directly. Useful for lab deployments or default printers pushed by policy.
+**Auto-install a specific printer (optional):** Set parameter 4 to the exact DisplayName. The script skips the picker and maps that queue directly. Inherited from the original project.
 
 ### Per-printer options
 
