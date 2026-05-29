@@ -26,9 +26,10 @@ SD_APP_PATH = "/Library/Application Support/Dialog/Dialog.app"
 # URL or path to your organization's logo (displayed in SwiftDialog prompts)
 BRANDICON = "https://example.com/your-org-logo.png"
 
-# SHARP copy code settings
-# Set COPY_CODE_ENABLED to False to skip the copy code prompt for SHARP printers
+# Copy code settings (for copiers that require user authentication codes)
+# Set COPY_CODE_ENABLED to False to skip the copy code prompt entirely
 COPY_CODE_ENABLED = True
+COPY_CODE_DRIVER_KEYWORD = "SHARP"
 COPY_CODE_LENGTH = 5
 COPY_CODE_DIALOG_TITLE = "Enter Your Copy Code"
 COPY_CODE_PROMPT = "Please enter your copy code:"
@@ -463,7 +464,7 @@ def add_queue(queue):
         q_driver = generic_ppd_path
 
     user_number = None
-    if COPY_CODE_ENABLED and 'SHARP' in q['Driver']:
+    if COPY_CODE_ENABLED and COPY_CODE_DRIVER_KEYWORD in q['Driver']:
         while True:  # Loop to keep prompting until valid input is received
             user_number_command = [
                 SDPATH,
@@ -557,10 +558,10 @@ def add_queue(queue):
         confirmation_title = "Notice"
         confirmation_message = f"The Konica copier {q['DisplayName']} has been installed.  \n\nFor account tracking setup, [see this solutions article](" + ACCOUNT_TRACK_ARTICLE_URL + ")." + ASSISTANCE_MESSAGE
 
-    elif 'SHARP' in q['Driver'] and user_number:
+    elif COPY_CODE_DRIVER_KEYWORD in q['Driver'] and user_number:
         confirmation_message = f"The SHARP copier {q['DisplayName']} has been installed.  \n\nYour copy code / user number is:  \n**{user_number}**.  \n\n*This code will be needed for making copies*.  \n\n\n For troubleshooting steps [click here](" + SHARP_COPIER_ARTICLE_URL + ")" + ASSISTANCE_MESSAGE
 
-    elif 'SHARP' in q['Driver']:
+    elif COPY_CODE_DRIVER_KEYWORD in q['Driver']:
         confirmation_message = f"The SHARP copier {q['DisplayName']} has been installed.  \n\nFor troubleshooting steps [click here](" + SHARP_COPIER_ARTICLE_URL + ")" + ASSISTANCE_MESSAGE
 
     # For HP Printers

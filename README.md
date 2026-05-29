@@ -2,7 +2,7 @@
 
 Based on [self-service-printer-installer](https://github.com/haircut/self-service-printer-installer) by [Matthew Warren](https://github.com/haircut).
 
-A macOS script for Jamf Pro Self Service that lets end users install network printers on their own. Downloads printer definitions from a Google Sheets CSV at runtime, shows a SwiftDialog picker, and maps the queue via `lpadmin`.
+A macOS script intended for Jamf Pro Self Service that lets end users install network printers on their own. Downloads printer definitions from a Google Sheets CSV at runtime, shows a SwiftDialog picker, and maps the queue via `lpadmin`. Can be adapted for other MDMs or run standalone.
 
 ## How it works
 
@@ -10,7 +10,7 @@ A macOS script for Jamf Pro Self Service that lets end users install network pri
 2. Shows the user a list of available printers, minus any they already have installed
 3. Installs the vendor print driver via Jamf policy trigger if needed
 4. Maps the queue via `lpadmin` with the correct PPD, URI, and any per-printer options
-5. For SHARP copiers, can prompt for a copy code and write it into the PPD for account tracking (controlled by `COPY_CODE_ENABLED`)
+5. For copiers that require it, can prompt for a copy code and write it into the PPD for account tracking (configurable via `COPY_CODE_ENABLED` and `COPY_CODE_DRIVER_KEYWORD`)
 6. User can add another printer or finish
 
 ## Printer types
@@ -18,18 +18,20 @@ A macOS script for Jamf Pro Self Service that lets end users install network pri
 | Type | Driver | Account tracking |
 |------|--------|-----------------|
 | HP LaserJet | Vendor PPD via Jamf trigger | None |
-| SHARP copiers | Vendor PPD + `ARUserNumber` via lpadmin | Automatic when SHARP driver detected (copy code prompted, validated, saved) |
+| Copiers with copy codes (e.g. SHARP) | Vendor PPD + `ARUserNumber` via lpadmin | Configurable (copy code prompted, validated, saved when enabled) |
 | Konica Minolta | Vendor PPD via Jamf trigger | Manual (user gets a link to a setup article) |
 | Generic (Brother, etc.) | Built-in `Generic.ppd` | None |
 
-When a user selects a SHARP printer (detected by `SHARP` in the Driver path from the CSV), the script prompts for a copy code, validates the input (length is configurable), writes it into the PPD with `lpadmin -o ARUserNumber=Custom.<code>`, restarts CUPS, and saves the code to `~/Library/PrinterInstaller/usernumber` so they don't have to enter it again next time. The prompt text, dialog title, and image are all configurable. If you don't have SHARP printers in your spreadsheet, none of this runs.
+When `COPY_CODE_ENABLED` is `True` and the selected printer's Driver path contains the `COPY_CODE_DRIVER_KEYWORD` (defaults to `SHARP`), the script prompts for a copy code, validates the input (length set by `COPY_CODE_LENGTH`), writes it into the PPD with `lpadmin -o ARUserNumber=Custom.<code>`, restarts CUPS, and saves the code to `~/Library/PrinterInstaller/usernumber` so they don't have to enter it again next time. The prompt text, dialog title, and image are all configurable. Set `COPY_CODE_ENABLED` to `False` to disable the feature entirely.
 
 Konica copiers need manual account tracking setup after install. The confirmation dialog links to a configurable support article for that.
 
 ## Requirements
 
-- macOS (tested Monterey through Tahoe). Compatibility is driven by [Mac Admins Python](https://github.com/macadmins/python) for the Python 3 runtime and [SwiftDialog](https://github.com/swiftDialog/swiftDialog) for the UI, both actively maintained for current macOS releases. The shebang points to the Mac Admins Python framework path (`/Library/ManagedFrameworks/Python/Python3.framework/...`). If your environment uses a different Python 3 path, update the first line of the script.
-- [Jamf Pro](https://www.jamf.com/) for policy execution and driver deployment
+- macOS (tested Catalina through Tahoe)
+- [Mac Admins Python](https://github.com/macadmins/python) - the shebang points to the Managed Python framework path (`/Library/ManagedFrameworks/Python/Python3.framework/...`). Update the first line of the script if your environment uses a different Python 3 path.
+- [SwiftDialog](https://github.com/swiftDialog/swiftDialog) for the UI
+- [Jamf Pro](https://www.jamf.com/) (intended for, but the core logic uses `lpadmin` and can be adapted for other MDMs or run standalone)
 - `requests` library (auto-installed at runtime if missing)
 
 ## Setup
@@ -74,8 +76,9 @@ ACCOUNT_TRACK_ARTICLE_URL = "https://example.com/support/articles/account-tracki
 SHARP_COPIER_ARTICLE_URL = "https://example.com/support/articles/sharp-copiers"
 HELP_DESK_MESSAGE = "For assistance, please contact your Help Desk."
 
-# SHARP copy code settings
+# Copy code settings
 COPY_CODE_ENABLED = True
+COPY_CODE_DRIVER_KEYWORD = "SHARP"
 COPY_CODE_LENGTH = 5
 COPY_CODE_DIALOG_TITLE = "Enter Your Copy Code"
 COPY_CODE_PROMPT = "Please enter your copy code:"
